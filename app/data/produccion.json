@@ -1,16 +1,21 @@
 {
   "video":{
-    "width":"400px",
+    "width":"450px",
     "height":"300px",
     "controlBarColor":"rgba(15, 39, 158, 0.82)",
     "controlBarElementColor":"#e0e0e0",
     "progressBarColor":"#fff",
     "transcriptionHeaderTitleColor":"#000",
-    "transcriptionContentFontSize":"14px"
+    "transcriptionContentFontSize":"14px",
+    "tiempo":true,
+    "velocidad":true,
+    "calidad":true,
+    "subtitulos":true
   },
   "presentacion":{
     "width":"300px",
     "frameColor":"rgba(15, 39, 158, 0.82)",
-    "colorLetra":"#000"
+    "colorLetra":"#F2F2F2",
+    "zoom":true
   }
 }

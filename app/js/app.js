@@ -1,5 +1,25 @@
+var Button = videojs.getComponent('Button');
+var MyButton =videojs.extend(Button,{
+
+  constructor: function () {
+    Button.apply(this, arguments);
+    this.addClass("vsj-transcript");
+  },
+  handleClick: function () {
+    this.options_.showTranscript=!this.options_.showTranscript
+    if(this.options_.showTranscript){
+      $('#transcript').show()
+    }else{
+      $('#transcript').hide()
+    }
+  }
+});
+
+videojs.registerComponent('MyButton', MyButton);
+
 /*PLAYER*/
 var video = videojs('my-player');
+
 // Set up any options.
 var options = {
   showTitle: false,
@@ -18,9 +38,15 @@ function temas(time){
   video.currentTime(time)
 }
 
+//AGREGA EL BOTON A LA BARRA DE CONTROLES DEL VIDEO PLAYER
+var controlBar= video.getChild('controlBar');
+var penultimoControl=controlBar.getChild("audioTrackButton");
+var prueba=controlBar.addChild('myButton',{showTranscript:true});
+controlBar.el().insertBefore(prueba.el(),penultimoControl.el());
+
+
 
 /*VISUALIZADOR*/
-
 
 
 // If absolute URL from the remote server is provided, configure the CORS
@@ -133,15 +159,20 @@ function runScript(e) {
 
 //Estilo dinamico Json
 
-$.getJSON( "data/produccion.json", function( data)  {
-  var items = [];
-  console.log(data);
-  $("div.vjs-control-bar").css("background-color",data.video.controlBarColor);
-  $("ul.vjs-menu-content").css("background-color",data.video.controlBarColor);
-  $(".vjs-control").css("color",data.video.controlBarElementColor);
-  $("div.vjs-play-progress").css("background-color",data.video.progressBarColor);
-  $("div.video-js").css({"height":data.video.height,"width":data.video.width});
-  $("#titlebar").css("background-image","url(img/texture.png), -webkit-linear-gradient("+data.presentacion.frameColor +","+ data.presentacion.frameColor+")");
-  $("#toolbarContainer").css("background-image","url(img/texture.png), -webkit-linear-gradient("+data.presentacion.frameColor +","+ data.presentacion.frameColor+")");
-  $("#the-canvas").css("width",data.presentacion.width);
+video.ready(function() {
+  $.getJSON( "data/produccion.json", function( data)  {
+    var items = [];
+    console.log(data);
+    $("div.vjs-control-bar").css("background-color",data.video.controlBarColor);
+    $("ul.vjs-menu-content").css("background-color",data.video.controlBarColor);
+    $(".vjs-control").css("color",data.video.controlBarElementColor);
+    $("div.vjs-play-progress").css("background-color",data.video.progressBarColor);
+    $("div.video-js").css({"height":data.video.height,"width":data.video.width});
+    $("#titlebar").css("background-image","url(img/texture.png), -webkit-linear-gradient("+data.presentacion.frameColor +","+ data.presentacion.frameColor+")");
+    $("#toolbarContainer").css("background-image","url(img/texture.png), -webkit-linear-gradient("+data.presentacion.frameColor +","+ data.presentacion.frameColor+")");
+    $("#the-canvas").css("width",data.presentacion.width);
+    $('#documentName').css("color",data.presentacion.colorLetra);
+    $('.toolbarLabel').css("color",data.presentacion.colorLetra);
+    $('#page_num').css("color",data.presentacion.colorLetra);
+  });
 });

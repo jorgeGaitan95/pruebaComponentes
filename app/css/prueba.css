@@ -179,3 +179,14 @@ h1{
 #the-canvas{
   box-shadow:rgba(0, 0, 0, 0.74902) 0px 0px 7px 0px;
 }
+.vsj-transcript:before{
+    content: 'Tr';
+    font-family: 'Times New Roman';
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    font-size: 18px;
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
