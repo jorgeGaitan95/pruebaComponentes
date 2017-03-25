@@ -7,10 +7,15 @@
     "progressBarColor":"#fff",
     "transcriptionHeaderTitleColor":"#000",
     "transcriptionContentFontSize":"14px",
+    "playButton":true,
+    "volumen":true,
+    "barraProgreso":true,
     "tiempo":true,
     "velocidad":true,
     "calidad":true,
-    "subtitulos":true
+    "subtitulos":true,
+    "trasncripcion":true,
+    "fullScreen":true,
   },
   "presentacion":{
     "width":"300px",

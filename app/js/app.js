@@ -18,7 +18,18 @@ var MyButton =videojs.extend(Button,{
 videojs.registerComponent('MyButton', MyButton);
 
 /*PLAYER*/
-var video = videojs('my-player');
+var video = videojs('my-player',{
+  controlBar: {
+    playToggle: false,
+    volumeMenuButton:false,
+    progressControl:false,
+    remainingTimeDisplay:false,
+    playbackRateMenuButton:false,
+    subtitlesButton: false,
+    fullscreenToggle: false,
+  }
+});
+
 
 // Set up any options.
 var options = {
@@ -26,13 +37,13 @@ var options = {
   showTrackSelector: true,
 };
 // Initialize the plugin.
-var transcript = video.transcript(options);
+/*var transcript = video.transcript(options);
 
 // Then attach the widget to the page.
 var transcriptContainer = document.querySelector('#transcript');
 transcriptContainer.appendChild(transcript.el());
 
-video.videoJsResolutionSwitcher();
+video.videoJsResolutionSwitcher();*/
 
 function temas(time){
   video.currentTime(time)
@@ -43,7 +54,7 @@ var controlBar= video.getChild('controlBar');
 var penultimoControl=controlBar.getChild("audioTrackButton");
 var prueba=controlBar.addChild('myButton',{showTranscript:true});
 controlBar.el().insertBefore(prueba.el(),penultimoControl.el());
-
+console.log(controlBar.children());
 
 
 /*VISUALIZADOR*/
