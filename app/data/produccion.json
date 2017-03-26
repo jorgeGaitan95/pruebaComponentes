@@ -1,7 +1,7 @@
 {
   "video":{
-    "width":"450px",
-    "height":"300px",
+    "width":"600px",
+    "height":"400px",
     "controlBarColor":"rgba(15, 39, 158, 0.82)",
     "controlBarElementColor":"#e0e0e0",
     "progressBarColor":"#fff",
@@ -15,7 +15,7 @@
     "calidad":true,
     "subtitulos":true,
     "trasncripcion":true,
-    "fullScreen":true,
+    "fullScreen":true
   },
   "presentacion":{
     "width":"300px",

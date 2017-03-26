@@ -17,18 +17,9 @@ var MyButton =videojs.extend(Button,{
 
 videojs.registerComponent('MyButton', MyButton);
 
+
 /*PLAYER*/
-var video = videojs('my-player',{
-  controlBar: {
-    playToggle: false,
-    volumeMenuButton:false,
-    progressControl:false,
-    remainingTimeDisplay:false,
-    playbackRateMenuButton:false,
-    subtitlesButton: false,
-    fullscreenToggle: false,
-  }
-});
+var video = videojs('my-player');
 
 
 // Set up any options.
@@ -36,14 +27,8 @@ var options = {
   showTitle: false,
   showTrackSelector: true,
 };
-// Initialize the plugin.
-/*var transcript = video.transcript(options);
-
-// Then attach the widget to the page.
-var transcriptContainer = document.querySelector('#transcript');
-transcriptContainer.appendChild(transcript.el());
-
-video.videoJsResolutionSwitcher();*/
+//Calidad
+video.videoJsResolutionSwitcher()
 
 function temas(time){
   video.currentTime(time)
@@ -171,9 +156,42 @@ function runScript(e) {
 //Estilo dinamico Json
 
 video.ready(function() {
-  $.getJSON( "data/produccion.json", function( data)  {
+
+  //OBTENER RESULTADOS VIA HTTP_REQUEST
+/*
+  var data_file = "produccion.json";
+  var http_request = new XMLHttpRequest();
+  try{
+   // Opera 8.0+, Firefox, Chrome, Safari
+   http_request = new XMLHttpRequest();
+  }catch (e){
+   // Internet Explorer Browsers
+    try{
+      http_request = new ActiveXObject("Msxml2.XMLHTTP");
+    }catch (e) {
+      try{
+       http_request = new ActiveXObject("Microsoft.XMLHTTP");
+      }catch (e){
+      // Something went wrong
+       alert("Your browser broke!");
+       return false;
+      }
+    }
+  };
+  http_request.onreadystatechange = function(){
+    if (http_request.readyState == 4  ){
+      // Javascript function JSON.parse to parse JSON data
+      var jsonObj = JSON.parse(http_request.responseText);
+      // jsonObj variable now contains the data structure and can
+      // be accessed as jsonObj.name and jsonObj.country.
+      console.log(jsonObj);
+    }
+  }
+  http_request.open("GET", data_file, true);
+  http_request.send();*/
+  $.getJSON( "data/produccion.json")
+  .done(function( data)  {
     var items = [];
-    console.log(data);
     $("div.vjs-control-bar").css("background-color",data.video.controlBarColor);
     $("ul.vjs-menu-content").css("background-color",data.video.controlBarColor);
     $(".vjs-control").css("color",data.video.controlBarElementColor);
@@ -185,5 +203,55 @@ video.ready(function() {
     $('#documentName').css("color",data.presentacion.colorLetra);
     $('.toolbarLabel').css("color",data.presentacion.colorLetra);
     $('#page_num').css("color",data.presentacion.colorLetra);
+    //HABILITAR DESHABILITAR CONTROLES DEL PLAYER
+    if(data.video.playButton===false)
+      controlBar.removeChild("playToggle");
+    if(data.video.volumen===false)
+      controlBar.removeChild("volumeMenuButton");
+    if(data.video.barraProgreso===false)
+      controlBar.removeChild("progressControl");
+    if(data.video.tiempo===false)
+      controlBar.removeChild("remainingTimeDisplay");
+    if(data.video.velocidad===false)
+      controlBar.removeChild("playbackRateMenuButton");
+    if(data.video.calidad===false)
+      $(".vjs-resolution-button").hide()
+    if(data.video.subtitulos===false)
+      controlBar.removeChild("subtitlesButton");
+    if(data.video.trasncripcion){
+      // Initialize the plugin.
+      var transcript = video.transcript(options);
+
+      // Then attach the widget to the page.
+      var transcriptContainer = document.querySelector('#transcript');
+      transcriptContainer.appendChild(transcript.el());
+    }
+    if(data.video.fullScreen===false)
+      controlBar.removeChild("fullscreenToggle");
   });
 });
+//PLugin Jquery para resaltar las palabras que se encuentren dentro de un texto
+//Esta funcionalidad es util para resoltar las palabras que coincidad en el panel de trasncripcion
+jQuery.fn.highlight = function (str, className) {
+    var regex = new RegExp(str, "gi");
+    return this.each(function () {
+        $(this).contents().filter(function() {
+            return this.nodeType == 3 && regex.test(this.nodeValue);
+        }).replaceWith(function() {
+            return (this.nodeValue || "").replace(regex, function(match) {
+                return "<span class=\"" + className + "\">" + match + "</span>";
+            });
+        });
+    });
+};
+
+function buscarPalabra() {
+  //limpa los campos resaltados si exiten
+  var seleccionadas=$(".highlight");
+  seleccionadas.each(function () {
+      $(this).contents().unwrap();
+  }
+  );
+  var query=$("#query").val();
+  $(".transcript-text").highlight(query,"highlight");
+}

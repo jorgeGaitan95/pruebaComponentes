@@ -190,3 +190,35 @@ h1{
     top: 10px;
     left: 0;
 }
+
+/*Campo de Busqueda trasncripcion*/
+#query{
+  background: #e4e4e4;
+  padding:10px;
+  border-radius:5px 0 0 5px;
+  -moz-border-radius:5px 0 0 5px;
+  -webkit-border-radius:5px 0 0 5px;
+  -o-border-radius:5px 0 0 5px;
+  border:0 none;
+  width:200px;
+}
+.queryButton{
+  background:rgba(15, 39, 158, 0.819608);
+  color:white;
+  font: 'trebuchet ms', trebuchet;
+  padding:10px 20px;
+  border-radius:0 5px 5px 0;
+  -moz-border-radius:0 5px 5px 0;
+  -webkit-border-radius:0 5px 5px 0;
+  -o-border-radius:0 5px 5px 0;
+  border:0 none;
+  font-weight:bold;
+}
+.searchBox{
+  margin-bottom: 10px;
+}
+
+.highlight{
+  background: #ffff00;
+  font-weight: bold;
+}
